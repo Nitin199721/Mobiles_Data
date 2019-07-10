@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mobile Data</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Kaushan+Script&display=swap" rel="stylesheet">
+    <script>
+        $(document).ready(function() {
+    // Setup - add a text input to each footer cell
+    $('#Mobile tfoot th').each( function (i,v) {
+
+        if (i==0){
+            return;
+        }
+        var title = $(this).text();
+        $(this).html( '<input class="col-lg-12" type="text" placeholder="'+title+'" />' );
+    } );
+
+    // DataTable
+    var table = $('#Mobile').DataTable({"autoWidth": false});
+
+    // Apply the search
+    table.columns().every( function () {
+        var that = this;
+
+        $( 'input', this.footer() ).on( 'keyup change', function () {
+            if ( that.search() !== this.value ) {
+                that
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+} );
+    </script>
+    <style>
+        th{
+            text-align: center;
+            border-right:1px solid;
+        }
+        td{
+            border-right: 1px solid;
+        }
+        h3{
+            font-family: 'Kaushan Script', cursive;
+        }
+        span{
+            float: right;
+        }
+        body{background: cornsilk;}
+    </style>
+</head>
+<body>
+
+<div style="background: cornsilk;">
+    <h3>Welcome {{ username }} <span>{{ email }}</span></h3>
+</div>
+
+
+<div>
+    <div class="container-fluid">
+        <table id="Mobile" class="display" style="display: block">
+            <thead>
+                <tr>
+                    <th>Phone Information</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Operating System</th>
+                    <th>Screen Resolution</th>
+                    <th>Screen Size</th>
+                    <th style="width:15%">Processor</th>
+                    <th>GPU</th>
+                    <th>RAM</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in q %}
+                <tr>
+                    <td><img src="{{ i.Img_Path }}"></td>
+                    <td>{{ i.Name }}</td>
+                    <td>{{ i.Price }}</td>
+                    <td>{{ i.SmartPhone_OS }}</td>
+                    <td>{{ i.ScreenResolution }}</td>
+                    <td>{{ i.ScreenSize }}</td>
+                    <td>{{ i.Processor }}</td>
+                    <td>{{ i.GPU }}</td>
+                    <td>{{ i.RAM }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Search Fields</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Operating System</th>
+                    <th>Screen Resolution</th>
+                    <th>Screen Size</th>
+                    <th>Processor</th>
+                    <th>GPU</th>
+                    <th>RAM</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+</body>
+</html>
